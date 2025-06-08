@@ -70,6 +70,7 @@
             align-items: center;
             padding: 30px;
             overflow: hidden;
+            box-sizing: border-box; /* Ensure padding is included in width/height */
         }
 
         h1 {
@@ -137,7 +138,7 @@
             justify-content: center;
             font-weight: 700;
             font-size: 1.2rem;
-            color: #2d3748; /* Changed to black/dark color */
+            color: var(--text-dark); /* Default to dark color */
             transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
             z-index: 5;
@@ -159,13 +160,32 @@
         .person:nth-child(4) { 
             background: linear-gradient(135deg, #d4fc79, #96e6a1);
             box-shadow: 0 8px 25px rgba(150, 230, 161, 0.4);
-            border: 3px solid rgba(255, 255, 255, 0.6);
+            color: var(--text-dark); /* 4 වැනි පුද්ගලයාගේ අංකය පෙනෙන පරිදි කළු පැහැය */
         }
         .person:nth-child(5) { 
             background: linear-gradient(135deg, #667eea, #764ba2);
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-            border: 3px solid rgba(255, 255, 255, 0.6);
-            color: white;
+            color: white; /* 5 වැනි පුද්ගලයාගේ අංකය පෙනෙන පරිදි සුදු පැහැය */
+        }
+        .person:nth-child(6) { 
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4);
+        }
+        .person:nth-child(7) { 
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            box-shadow: 0 8px 25px rgba(161, 196, 253, 0.4);
+        }
+        .person:nth-child(8) { 
+            background: linear-gradient(135deg, #ffc3a0, #ffafbd);
+            box-shadow: 0 8px 25px rgba(255, 175, 189, 0.4);
+        }
+        .person:nth-child(9) { 
+            background: linear-gradient(135deg, #a6c1ee, #fbc2eb);
+            box-shadow: 0 8px 25px rgba(251, 194, 235, 0.4);
+        }
+        .person:nth-child(10) { 
+            background: linear-gradient(135deg, #84fab0, #8fd3f4);
+            box-shadow: 0 8px 25px rgba(143, 211, 244, 0.4);
         }
 
         .person:hover {
@@ -482,7 +502,7 @@
         <h1>Ice Cream දන්සල</h1>
         
         <div id="stats">
-            <div>People in line: <span id="queue-count">5</span></div>
+            <div>People in line: <span id="queue-count">10</span></div>
             <div>Time: <span id="timer">0</span>s</div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress"></div>
@@ -500,6 +520,11 @@
             <div class="person" id="person3">3</div>
             <div class="person" id="person4">4</div>
             <div class="person" id="person5">5</div>
+            <div class="person" id="person6">6</div>
+            <div class="person" id="person7">7</div>
+            <div class="person" id="person8">8</div>
+            <div class="person" id="person9">9</div>
+            <div class="person" id="person10">10</div>
             <div id="player">YOU</div>
         </div>
 
@@ -533,7 +558,7 @@
                 
                 this.gameActive = true;
                 this.playerPos = { x: 0, y: 0 };
-                this.queueSize = 5;
+                this.queueSize = this.people.length; // Initialize with total number of people
                 this.startTime = Date.now();
                 this.lastMoveTime = Date.now();
                 this.afkTimeout = 8000; // 8 seconds
@@ -593,19 +618,25 @@
                 const isMobile = window.innerWidth <= 768;
                 const personWidth = isMobile ? 50 : 70;
                 const spacing = isMobile ? 60 : 90;
-                const startX = isMobile ? 120 : 200;
+                const initialStartX = isMobile ? 120 : 200; // Initial position for the first person in queue
                 
-                // Position people in queue properly - all 5 people
-                this.people.forEach((person, index) => {
-                    if (!person.classList.contains('served')) {
-                        const x = startX + (index * spacing);
-                        person.style.left = `${x}px`;
-                        person.style.display = 'flex'; // Ensure all persons are visible
-                    }
+                // Filter out 'served' people and position the remaining ones
+                const activePeople = this.people.filter(p => !p.classList.contains('served'));
+                activePeople.forEach((person, index) => {
+                    const x = initialStartX + (index * spacing);
+                    person.style.left = `${x}px`;
+                    person.style.display = 'flex'; // Ensure all active persons are visible
                 });
                 
-                // Position player at end of line (after all 5 people)
-                const lastPersonX = startX + (5 * spacing); // Changed from this.people.length to 5
+                // Hide people who are 'served'
+                this.people.forEach(person => {
+                    if (person.classList.contains('served')) {
+                        person.style.display = 'none';
+                    }
+                });
+
+                // Position player at end of the *active* line
+                const lastPersonX = initialStartX + (activePeople.length * spacing);
                 this.playerPos = { x: lastPersonX, y: isMobile ? 35 : 50 };
                 this.updatePlayerPosition();
             }
@@ -683,7 +714,10 @@
                     const firstPersonRect = firstPerson.getBoundingClientRect();
                     const playerRect = this.player.getBoundingClientRect();
                     
-                    if (playerRect.right < firstPersonRect.left - 10) {
+                    // The player cannot move past the position of the first person in line.
+                    // A small buffer is added to allow for slight overlap without triggering game over.
+                    const buffer = (firstPersonRect.width / 4); // Adjusted buffer for better feel
+                    if (playerRect.left < firstPersonRect.left - buffer) {
                         this.gameOver("No cutting in line! Wait your turn!");
                         return;
                     }
@@ -703,43 +737,40 @@
                 const rect2 = el2.getBoundingClientRect();
                 
                 return !(rect1.right < rect2.left || 
-                        rect1.left > rect2.right || 
-                        rect1.bottom < rect2.top || 
-                        rect1.top > rect2.bottom);
+                             rect1.left > rect2.right || 
+                             rect1.bottom < rect2.top || 
+                             rect1.top > rect2.bottom);
             }
 
             startAutoMovement() {
                 this.autoMoveInterval = setInterval(() => {
-                    if (!this.gameActive || this.people.length === 0) return;
+                    if (!this.gameActive) return;
                     
                     const activePeople = this.people.filter(p => !p.classList.contains('served'));
                     if (activePeople.length > 0) {
                         const firstPerson = activePeople[0];
-                        firstPerson.classList.add('served');
-                        
-                        // Move remaining people forward
+                        firstPerson.classList.add('served'); // Mark as served
+
+                        // Apply CSS transition to make it disappear smoothly
+                        firstPerson.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        firstPerson.style.opacity = '0';
+                        firstPerson.style.transform = 'scale(0.5) translateY(-50px)'; // Make it shrink and move up
+
+                        // After a short delay, reposition others and update stats
                         setTimeout(() => {
-                            const remainingPeople = this.people.filter(p => !p.classList.contains('served'));
-                            const isMobile = window.innerWidth <= 768;
-                            const spacing = isMobile ? 60 : 90;
-                            const startX = isMobile ? 120 : 200;
-                            
-                            remainingPeople.forEach((person, index) => {
-                                const x = startX + (index * spacing);
-                                person.style.left = `${x}px`;
-                            });
-                            
-                            this.queueSize = remainingPeople.length;
+                            firstPerson.style.display = 'none'; // Hide it from layout
+                            this.queueSize = this.people.filter(p => !p.classList.contains('served')).length;
+                            this.positionElements(); // Recalculate positions for remaining people
                             this.updateStats();
                             
-                            if (remainingPeople.length === 0) {
+                            if (this.queueSize === 0) {
                                 this.message.textContent = "Queue is empty! Head to the ice cream counter!";
                             } else {
-                                this.message.textContent = `${remainingPeople.length} people ahead of you. Keep waiting!`;
+                                this.message.textContent = `${this.queueSize} people ahead of you. Keep waiting!`;
                             }
-                        }, 300);
+                        }, 500); // Wait for the transition to finish
                     }
-                }, 4000);
+                }, 4000); // People leave queue every 4 seconds
             }
 
             startGameTimer() {
