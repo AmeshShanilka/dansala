@@ -785,7 +785,7 @@
                 const activePeople = this.people.filter(p => !p.classList.contains('served'));
                 for (let person of activePeople) {
                     if (this.checkCollision(this.player, person)) {
-                        this.gameOver("Oops! You bumped into someone in line!");
+                        this.gameOver("එයී! පෝලිම් පනින්න එපා!");
                         return;
                     }
                 }
@@ -797,7 +797,7 @@
                     
                     const buffer = (firstPersonRect.width / 4);
                     if (playerRect.left < firstPersonRect.left - buffer) {
-                        this.gameOver("No cutting in line! Wait your turn!");
+                        this.gameOver("පෝලිම් පනින්න එපා! තමන්ගෙ වාරෙ එනකන් ඉන්න!");
                         return;
                     }
                 }
