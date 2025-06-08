@@ -35,10 +35,9 @@
             position: relative;
             margin: 0;
             padding: 0;
-            touch-action: manipulation; /* Prevent zoom on touch */
+            touch-action: manipulation;
         }
 
-        /* Animated background particles */
         body::before {
             content: '';
             position: absolute;
@@ -70,7 +69,7 @@
             align-items: center;
             padding: 30px;
             overflow: hidden;
-            box-sizing: border-box; /* Ensure padding is included in width/height */
+            box-sizing: border-box;
         }
 
         h1 {
@@ -81,16 +80,19 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 30px;
-            text-align: center;
+            text-align: left; /* Changed to left */
+            padding-left: 50px; /* Added padding to the left */
             animation: glow 2s ease-in-out infinite alternate;
             position: relative;
+            width: 100%; /* Ensure it takes full width to align text */
         }
 
         h1::after {
             content: '🍦';
             position: absolute;
             top: -10px;
-            right: -50px;
+            /* Adjust left position relative to h1 */
+            left: 50px; /* Place it at the beginning of the text, adjust as needed */
             font-size: 2rem;
             animation: bounce 1s ease-in-out infinite;
         }
@@ -138,13 +140,14 @@
             justify-content: center;
             font-weight: 700;
             font-size: 1.2rem;
-            color: var(--text-dark); /* Default to dark color */
+            color: var(--text-dark);
             transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
             z-index: 5;
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5); /* Add white text shadow for better contrast */
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
         }
 
+        /* Person colors - more vibrant and distinct */
         .person:nth-child(1) { 
             background: linear-gradient(135deg, #ff9a9e, #fecfef);
             box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4);
@@ -160,12 +163,12 @@
         .person:nth-child(4) { 
             background: linear-gradient(135deg, #d4fc79, #96e6a1);
             box-shadow: 0 8px 25px rgba(150, 230, 161, 0.4);
-            color: var(--text-dark); /* 4 වැනි පුද්ගලයාගේ අංකය පෙනෙන පරිදි කළු පැහැය */
+            color: var(--text-dark);
         }
         .person:nth-child(5) { 
             background: linear-gradient(135deg, #667eea, #764ba2);
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-            color: white; /* 5 වැනි පුද්ගලයාගේ අංකය පෙනෙන පරිදි සුදු පැහැය */
+            color: white;
         }
         .person:nth-child(6) { 
             background: linear-gradient(135deg, #ff9a9e, #fad0c4);
@@ -186,6 +189,26 @@
         .person:nth-child(10) { 
             background: linear-gradient(135deg, #84fab0, #8fd3f4);
             box-shadow: 0 8px 25px rgba(143, 211, 244, 0.4);
+        }
+        .person:nth-child(11) { 
+            background: linear-gradient(135deg, #a6c0fe, #f68084);
+            box-shadow: 0 8px 25px rgba(246, 128, 132, 0.4);
+        }
+        .person:nth-child(12) { 
+            background: linear-gradient(135deg, #d299c2, #fef9d7);
+            box-shadow: 0 8px 25px rgba(254, 249, 215, 0.4);
+        }
+        .person:nth-child(13) { 
+            background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+            box-shadow: 0 8px 25px rgba(166, 193, 238, 0.4);
+        }
+        .person:nth-child(14) { 
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            box-shadow: 0 8px 25px rgba(252, 182, 159, 0.4);
+        }
+        .person:nth-child(15) { 
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4);
         }
 
         .person:hover {
@@ -365,30 +388,33 @@
         /* Mobile responsiveness */
         @media (max-width: 768px) {
             body {
-                padding: 10px;
+                padding: 0; /* Remove padding for full screen on mobile */
             }
             
             #game-container {
                 width: 100vw;
                 height: 100vh;
                 padding: 15px;
-                border-radius: 0;
+                border-radius: 0; /* Remove border-radius for full screen */
                 margin: 0;
             }
             
             h1 {
                 font-size: 2rem;
                 margin-bottom: 15px;
+                padding-left: 20px; /* Adjust padding for smaller screens */
             }
             
             h1::after {
-                right: -30px;
+                left: 20px; /* Adjust emoji position for smaller screens */
                 font-size: 1.5rem;
             }
             
             #game-area {
                 height: 300px;
                 margin-bottom: 15px;
+                /* Add more space to the left for the counter on mobile */
+                padding-left: 100px; 
             }
             
             #queue-line {
@@ -414,7 +440,7 @@
                 width: 80px;
                 height: 80px;
                 top: 30px;
-                left: 20px;
+                left: 20px; /* Adjust left position for mobile */
                 font-size: 0.7rem;
             }
             
@@ -465,6 +491,7 @@
             
             #game-area {
                 height: 250px;
+                padding-left: 90px; /* Further adjust padding for smaller screens */
             }
             
             .person {
@@ -502,7 +529,7 @@
         <h1>Ice Cream දන්සල</h1>
         
         <div id="stats">
-            <div>People in line: <span id="queue-count">10</span></div>
+            <div>People in line: <span id="queue-count">15</span></div>
             <div>Time: <span id="timer">0</span>s</div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress"></div>
@@ -512,24 +539,28 @@
         <div id="game-area">
             <div id="ice-cream-counter">
                 <div>Ice Cream</div>
-                <div>Counter</div>
+                <div>දෙන තැන</div>
             </div>
             <div id="queue-line"></div>
-            <div class="person" id="person1">1</div>
-            <div class="person" id="person2">2</div>
-            <div class="person" id="person3">3</div>
-            <div class="person" id="person4">4</div>
-            <div class="person" id="person5">5</div>
-            <div class="person" id="person6">6</div>
-            <div class="person" id="person7">7</div>
-            <div class="person" id="person8">8</div>
-            <div class="person" id="person9">9</div>
-            <div class="person" id="person10">10</div>
-            <div id="player">YOU</div>
-        </div>
+            <div class="person" id="person1">කසුන්</div>
+            <div class="person" id="person2">සජිත්</div>
+            <div class="person" id="person3">මාලනී</div>
+            <div class="person" id="person4">නිපුන්</div>
+            <div class="person" id="person5">භානුක</div>
+            <div class="person" id="person6">සුපුන්</div>
+            <div class="person" id="person7">නිලංකා</div>
+            <div class="person" id="person8">චාමර</div>
+            <div class="person" id="person9">ලහිරු</div>
+            <div class="person" id="person10">රශ්මි</div>
+            <div class="person" id="person11">අමාෂා</div>
+            <div class="person" id="person12">රනිල්</div>
+            <div class="person" id="person13">රොමේශ්</div>
+            <div class="person" id="person14">අකිල</div>
+            <div class="person" id="person15">ගයාන්</div>
+            <div id="player"></div> </div>
 
         <div id="message-container">
-            <div id="message">Use arrow keys or buttons to move. Wait your turn in line!</div>
+            <div id="message">Use arrow keys or buttons to move. ඔයාගෙ වාරෙ එනකන් ඉන්න!</div>
         </div>
 
         <div id="controls">
@@ -558,17 +589,22 @@
                 
                 this.gameActive = true;
                 this.playerPos = { x: 0, y: 0 };
-                this.queueSize = this.people.length; // Initialize with total number of people
+                this.queueSize = this.people.length;
                 this.startTime = Date.now();
                 this.lastMoveTime = Date.now();
-                this.afkTimeout = 8000; // 8 seconds
+                this.afkTimeout = 8000;
                 this.autoMoveInterval = null;
                 this.gameTimer = null;
+                this.activeDirections = new Set();
+                this.moveInterval = null;
+                this.moveSpeed = 5;
+                this.playerName = ""; // Player name property
                 
                 this.init();
             }
 
             init() {
+                this.askForPlayerName(); // Ask for player name at the start
                 this.setupEventListeners();
                 this.positionElements();
                 this.startAutoMovement();
@@ -576,41 +612,127 @@
                 this.updateStats();
             }
 
+            askForPlayerName() {
+                let name = prompt("මචන්, උඹේ නම මොකක්ද? (What's your name, buddy?)");
+                if (!name || name.trim() === "") {
+                    this.playerName = "You"; // Default name if no input
+                } else {
+                    this.playerName = name.trim();
+                }
+                this.player.textContent = this.playerName; // Set player's name
+            }
+
             setupEventListeners() {
-                // Keyboard controls
-                document.addEventListener('keydown', (e) => this.handleKeyPress(e));
+                document.addEventListener('keydown', (e) => this.handleKeyDown(e));
+                document.addEventListener('keyup', (e) => this.handleKeyUp(e));
                 
-                // Touch controls with better mobile interaction
                 this.controlBtns.forEach(btn => {
-                    // Handle both click and touch events
-                    const handleMove = (e) => {
+                    const handleStart = (e) => {
                         e.preventDefault();
                         const direction = btn.dataset.direction;
-                        this.movePlayer(direction);
-                        
-                        // Visual feedback
+                        this.activeDirections.add(direction);
+                        this.startContinuousMovement();
                         btn.style.transform = 'scale(0.95)';
-                        setTimeout(() => {
-                            btn.style.transform = '';
-                        }, 100);
                     };
                     
-                    btn.addEventListener('touchstart', handleMove, { passive: false });
-                    btn.addEventListener('click', handleMove);
+                    const handleEnd = (e) => {
+                        e.preventDefault();
+                        const direction = btn.dataset.direction;
+                        this.activeDirections.delete(direction);
+                        if (this.activeDirections.size === 0) {
+                            this.stopContinuousMovement();
+                        }
+                        btn.style.transform = '';
+                    };
+                    
+                    btn.addEventListener('touchstart', handleStart, { passive: false });
+                    btn.addEventListener('mousedown', handleStart);
+                    btn.addEventListener('touchend', handleEnd, { passive: false });
+                    btn.addEventListener('mouseup', handleEnd);
+                    btn.addEventListener('mouseleave', handleEnd);
                 });
                 
-                // Handle window resize for responsive repositioning
                 window.addEventListener('resize', () => {
                     setTimeout(() => {
                         this.positionElements();
                     }, 100);
                 });
                 
-                // Reset button
                 this.resetButton.addEventListener('click', () => this.resetGame());
-                
-                // Prevent context menu on touch devices
                 document.addEventListener('contextmenu', e => e.preventDefault());
+            }
+
+            handleKeyDown(e) {
+                if (!this.gameActive) return;
+                
+                const key = e.key;
+                if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
+                    e.preventDefault();
+                    const direction = key.replace('Arrow', '').toLowerCase();
+                    this.activeDirections.add(direction);
+                    this.startContinuousMovement();
+                }
+            }
+
+            handleKeyUp(e) {
+                const key = e.key;
+                if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
+                    e.preventDefault();
+                    const direction = key.replace('Arrow', '').toLowerCase();
+                    this.activeDirections.delete(direction);
+                    if (this.activeDirections.size === 0) {
+                        this.stopContinuousMovement();
+                    }
+                }
+            }
+
+            startContinuousMovement() {
+                if (this.moveInterval) return;
+                
+                this.moveInterval = setInterval(() => {
+                    if (this.activeDirections.size > 0) {
+                        let moveX = 0;
+                        let moveY = 0;
+                        
+                        this.activeDirections.forEach(direction => {
+                            switch(direction) {
+                                case 'up': moveY += this.moveSpeed; break;
+                                case 'down': moveY -= this.moveSpeed; break;
+                                case 'left': moveX -= this.moveSpeed; break;
+                                case 'right': moveX += this.moveSpeed; break;
+                            }
+                        });
+                        
+                        this.movePlayerContinuous(moveX, moveY);
+                    }
+                }, 16);
+            }
+
+            stopContinuousMovement() {
+                if (this.moveInterval) {
+                    clearInterval(this.moveInterval);
+                    this.moveInterval = null;
+                }
+            }
+
+            movePlayerContinuous(moveX, moveY) {
+                if (!this.gameActive) return;
+                
+                const isMobile = window.innerWidth <= 768;
+                const bounds = this.gameArea.getBoundingClientRect();
+                const playerSize = isMobile ? 55 : 80;
+                const bottomOffset = isMobile ? 35 : 50;
+                
+                let newX = this.playerPos.x + moveX;
+                let newY = this.playerPos.y + moveY;
+                
+                newX = Math.max(0, Math.min(bounds.width - playerSize, newX));
+                newY = Math.max(0, Math.min(bounds.height - playerSize - bottomOffset, newY));
+                
+                this.playerPos = { x: newX, y: newY };
+                this.updatePlayerPosition();
+                this.lastMoveTime = Date.now();
+                this.checkGameState();
             }
 
             positionElements() {
@@ -618,26 +740,32 @@
                 const isMobile = window.innerWidth <= 768;
                 const personWidth = isMobile ? 50 : 70;
                 const spacing = isMobile ? 60 : 90;
-                const initialStartX = isMobile ? 120 : 200; // Initial position for the first person in queue
+                const initialStartX = isMobile ? 120 : 200;
                 
-                // Filter out 'served' people and position the remaining ones
+                // Make the queue more curved like a real queue
                 const activePeople = this.people.filter(p => !p.classList.contains('served'));
                 activePeople.forEach((person, index) => {
-                    const x = initialStartX + (index * spacing);
+                    // Add some randomness to the position to make it more natural
+                    const randomOffset = Math.random() * 20 - 10; // -10 to 10
+                    const x = initialStartX + (index * spacing * 0.9); // Slightly closer together
+                    const yOffset = Math.sin(index * 0.3) * 15; // Gentle wave pattern
                     person.style.left = `${x}px`;
-                    person.style.display = 'flex'; // Ensure all active persons are visible
+                    person.style.bottom = `${50 + yOffset + randomOffset}px`;
+                    person.style.display = 'flex';
                 });
                 
-                // Hide people who are 'served'
                 this.people.forEach(person => {
                     if (person.classList.contains('served')) {
                         person.style.display = 'none';
                     }
                 });
 
-                // Position player at end of the *active* line
-                const lastPersonX = initialStartX + (activePeople.length * spacing);
-                this.playerPos = { x: lastPersonX, y: isMobile ? 35 : 50 };
+                const lastPersonX = initialStartX + (activePeople.length * spacing * 0.9);
+                const lastPersonYOffset = Math.sin(activePeople.length * 0.3) * 15;
+                this.playerPos = { 
+                    x: lastPersonX, 
+                    y: isMobile ? 35 + lastPersonYOffset : 50 + lastPersonYOffset 
+                };
                 this.updatePlayerPosition();
             }
 
@@ -646,60 +774,14 @@
                 this.player.style.bottom = `${this.playerPos.y}px`;
             }
 
-            handleKeyPress(e) {
-                if (!this.gameActive) return;
-                
-                const key = e.key;
-                if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
-                    e.preventDefault();
-                    const direction = key.replace('Arrow', '').toLowerCase();
-                    this.movePlayer(direction);
-                }
-            }
-
-            movePlayer(direction) {
-                if (!this.gameActive) return;
-                
-                const isMobile = window.innerWidth <= 768;
-                const moveAmount = isMobile ? 15 : 20;
-                const bounds = this.gameArea.getBoundingClientRect();
-                const playerSize = isMobile ? 55 : 80;
-                const bottomOffset = isMobile ? 35 : 50;
-                
-                let newX = this.playerPos.x;
-                let newY = this.playerPos.y;
-                
-                switch(direction) {
-                    case 'up':
-                        newY = Math.min(bounds.height - playerSize - bottomOffset, this.playerPos.y + moveAmount);
-                        break;
-                    case 'down':
-                        newY = Math.max(0, this.playerPos.y - moveAmount);
-                        break;
-                    case 'left':
-                        newX = Math.max(0, this.playerPos.x - moveAmount);
-                        break;
-                    case 'right':
-                        newX = Math.min(bounds.width - playerSize, this.playerPos.x + moveAmount);
-                        break;
-                }
-                
-                this.playerPos = { x: newX, y: newY };
-                this.updatePlayerPosition();
-                this.lastMoveTime = Date.now();
-                this.checkGameState();
-            }
-
             checkGameState() {
                 if (!this.gameActive) return;
                 
-                // Check AFK timeout
                 if (Date.now() - this.lastMoveTime > this.afkTimeout) {
                     this.gameOver("Time's up! You waited too long without moving.");
                     return;
                 }
                 
-                // Check collision with people
                 const activePeople = this.people.filter(p => !p.classList.contains('served'));
                 for (let person of activePeople) {
                     if (this.checkCollision(this.player, person)) {
@@ -708,22 +790,18 @@
                     }
                 }
                 
-                // Check if cutting in line
                 if (activePeople.length > 0) {
                     const firstPerson = activePeople[0];
                     const firstPersonRect = firstPerson.getBoundingClientRect();
                     const playerRect = this.player.getBoundingClientRect();
                     
-                    // The player cannot move past the position of the first person in line.
-                    // A small buffer is added to allow for slight overlap without triggering game over.
-                    const buffer = (firstPersonRect.width / 4); // Adjusted buffer for better feel
+                    const buffer = (firstPersonRect.width / 4);
                     if (playerRect.left < firstPersonRect.left - buffer) {
                         this.gameOver("No cutting in line! Wait your turn!");
                         return;
                     }
                 }
                 
-                // Check if reached counter when queue is empty
                 if (activePeople.length === 0) {
                     const counter = document.getElementById('ice-cream-counter');
                     if (this.checkCollision(this.player, counter)) {
@@ -737,9 +815,9 @@
                 const rect2 = el2.getBoundingClientRect();
                 
                 return !(rect1.right < rect2.left || 
-                             rect1.left > rect2.right || 
-                             rect1.bottom < rect2.top || 
-                             rect1.top > rect2.bottom);
+                                rect1.left > rect2.right || 
+                                rect1.bottom < rect2.top || 
+                                rect1.top > rect2.bottom);
             }
 
             startAutoMovement() {
@@ -749,28 +827,26 @@
                     const activePeople = this.people.filter(p => !p.classList.contains('served'));
                     if (activePeople.length > 0) {
                         const firstPerson = activePeople[0];
-                        firstPerson.classList.add('served'); // Mark as served
+                        firstPerson.classList.add('served');
 
-                        // Apply CSS transition to make it disappear smoothly
                         firstPerson.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                         firstPerson.style.opacity = '0';
-                        firstPerson.style.transform = 'scale(0.5) translateY(-50px)'; // Make it shrink and move up
+                        firstPerson.style.transform = 'scale(0.5) translateY(-50px)';
 
-                        // After a short delay, reposition others and update stats
                         setTimeout(() => {
-                            firstPerson.style.display = 'none'; // Hide it from layout
+                            firstPerson.style.display = 'none';
                             this.queueSize = this.people.filter(p => !p.classList.contains('served')).length;
-                            this.positionElements(); // Recalculate positions for remaining people
+                            this.positionElements();
                             this.updateStats();
                             
                             if (this.queueSize === 0) {
-                                this.message.textContent = "Queue is empty! Head to the ice cream counter!";
+                                this.message.textContent = `පෝලිම හිස් බන්! ice cream ගන්න යමු, ${this.playerName}!`;
                             } else {
-                                this.message.textContent = `${this.queueSize} people ahead of you. Keep waiting!`;
+                                this.message.textContent = `${this.queueSize} දෙනෙක් ඉන්නවා  බන් ${this.playerName}. තව ටිකක් ඉන්න!`;
                             }
-                        }, 500); // Wait for the transition to finish
+                        }, 500);
                     }
-                }, 4000); // People leave queue every 4 seconds
+                }, 4000);
             }
 
             startGameTimer() {
@@ -780,8 +856,7 @@
                     const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
                     this.timer.textContent = elapsed;
                     
-                    // Update progress bar
-                    const progress = Math.min(100, (elapsed / 60) * 100); // Max 60 seconds
+                    const progress = Math.min(100, (elapsed / 60) * 100); // Progress based on 60 seconds
                     this.progress.style.width = `${progress}%`;
                 }, 1000);
             }
@@ -794,12 +869,12 @@
                 this.gameActive = false;
                 clearInterval(this.autoMoveInterval);
                 clearInterval(this.gameTimer);
+                this.stopContinuousMovement();
                 
-                this.message.textContent = `Game Over! ${reason}`;
+                this.message.textContent = `Game Over, ${this.playerName}! ${reason}`;
                 this.message.style.color = '#ff6b9d';
                 this.resetButton.style.display = 'block';
                 
-                // Add shake animation to player
                 this.player.style.animation = 'shake 0.5s ease-in-out';
             }
 
@@ -807,32 +882,18 @@
                 this.gameActive = false;
                 clearInterval(this.autoMoveInterval);
                 clearInterval(this.gameTimer);
+                this.stopContinuousMovement();
                 
-                this.message.textContent = "🎉 Congratulations! You got your ice cream! 🍦";
+                this.message.textContent = `🎉 Congratulations, ${this.playerName}! You got your ice cream! 🍦`;
                 this.message.style.color = '#4ecdc4';
                 this.resetButton.style.display = 'block';
-                
-                // Add celebration animation
-                this.player.style.animation = 'bounce 1s ease-in-out infinite';
             }
 
             resetGame() {
-                location.reload();
+                location.reload(); // Simple reload for reset
             }
         }
 
-        // Add shake animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                25% { transform: translateX(-10px); }
-                75% { transform: translateX(10px); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Initialize game when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             new IceCreamGame();
         });
